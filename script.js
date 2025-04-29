@@ -37,13 +37,15 @@ ie: greet('George', sayGoodbye) -> `Hello, ${name}!` | `Goodbye!`
 */
 
 //my attempt at an example
-function iAm (identity) { //<--JS just knows this is a function
-    console.log(typeof identity);//<--Proof this is a function
-    identity();//<--we're referring to it as a callback function
+function iAm (identity) { //<--identity is referencing the arrow function for it's value
+    console.log(typeof identity);//<--confirming that the data type of arg is a function
+    identity();//<--tells us to actually do smth the function referred to by the
+    //identity argument cuz w/o it, the func would just sit there and do nothing
     }
 
-iAm(() =>{ //<--
-    console.log("I am George");    
+iAm(() =>{ //<--we are calling the iAm function and using an arrow function as the
+    //argument for it, which is what identity is referencing
+    console.log("I am George"); //<--What gets printed to console at the end  
 });
 
 
@@ -66,14 +68,10 @@ iAm(() =>{ //<--
 
 //+++Exercise: Using Callbacks+++//
 
-function prepareIngredients(callback) {
-    setTimeout(() => {
-		// Simulate a 2-second delay
-callback("Ingredients are prepared.");
-    }, 1000);
- }
 
 function makeSandwich () {
+    console.log('Making Sandwich...')
+
     prepareIngredients((message1) => {
         console.log(`message1:`, message1);
     });
@@ -88,24 +86,87 @@ function makeSandwich () {
 
 }
 
+function prepareIngredients(callback) {
+    setTimeout(() => {
+		// Simulate a 1-second delay
+callback("Ingredients are prepared.");
+    }, 1000);
+};
+
 function assembleSandwich(sandwichStatus){
     setTimeout(() => {
+        // Simulate a 1.5-second delay
         sandwichStatus("Sandwhich is assembled.")
     }, 1500);
 };
 
 function serveSandwich (sandwichServed){
     setTimeout(() =>{
+        // Simulate a 2-second delay
         sandwichServed("Sandwich is served.")
     }, 2000);
 };
 
 makeSandwich();
+
+/*
+What's happening here is that we're defining multiple functions which will serve
+as our callback functions when it comes time to execute our makeSandwich function.
+
+This is a case of using callback functions because the makeSandwich serves
+as the higher order function, and within that higher order function we have the
+callback functions: prepareIngredients, assembleSandwich, serveSandwich
+
+order of stack:
+makeSandwich() > 'Making Sandwich...' > prepareIngredients after 1 second > 
+assembleSandwich after 1.5 seconds > serveSandwich after 2 seconds >
+console logs all happen when delay timer finishes, not in the order of the
+function calls.
+*/
+
 //backwards because timings in ppt were messed up, fixing now
 
 //Async/Await & Promises
 
+/*
+function greet1() {
+    console.log("Hello!");
+    }
+    
+    function sayName() {
+    console.log("Alice");
+    greet1();
+    }
+    
+    // Execution order:
+    // sayName →
+    // greet →
+    // console.log
+    sayName();
 
+---
+Explanation:
+
+*/
+
+/*
+console.log("Start");
+// Macrotask: setTimeout()
+setTimeout(() => console.log("Timeout"), 0);
+// Microtask: Promise
+Promise.resolve().then(() => console.log("Promise"));
+console.log("End");
+
+// Output
+// Start
+// End
+// Promise  // Microtask runs before macrotask
+// Timeout
+---
+Because start and end are static, they will enter the stack first, and then promise
+would enter the stack next since it's a microtask and the finally timeout since 
+its a macrotask
+*/
 
  
 
