@@ -163,9 +163,11 @@ console.log("End");
 // Promise  // Microtask runs before macrotask
 // Timeout
 ---
-Because start and end are static, they will enter the stack first, and then promise
-would enter the stack next since it's a microtask and the finally timeout since 
-its a macrotask
+Because start and end are synchronous tasks, they will execute and resolve off the
+call stack first. Then the macrotask, setTimeOut, will get sent to the web api
+to process and finish. Simlarly, the microtask, promise.resolve().then() will get
+sent to the microtask queue to also wait until that resolves, therefore offloading
+both to their respective 
 */
 
  
