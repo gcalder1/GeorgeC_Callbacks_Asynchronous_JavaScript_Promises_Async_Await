@@ -4,7 +4,7 @@ function addStudentToClass(nameStudent, ageStudent){
             rejStudentFromClass(`${nameStudent} is too young for this class`);
         } else {
             setTimeout(() => {
-                accStudentToClass(`${nameStudent} added to the class`);
+                accStudentToClass(`${nameStudent}, was added to the class`);
             }, Math.floor(Math.random() * 2001) + 1000);
         }
     }) 
@@ -12,10 +12,10 @@ function addStudentToClass(nameStudent, ageStudent){
 
 async function registerStudent(student){
     try {
-        const msg = await addStudentToClass(student.age);
-        console.log(msg);
+        const msg = await addStudentToClass(student.name, student.age);
+        console.log('The following student:', msg);
     } catch (err) {
-        console.log(err);
+        console.log(`${err}.`, 'Please send him away.');
     }
 }
     
