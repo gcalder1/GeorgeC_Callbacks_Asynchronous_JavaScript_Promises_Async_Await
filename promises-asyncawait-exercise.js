@@ -15,7 +15,7 @@ async function registerStudent(student){
         const msg = await addStudentToClass(student.name, student.age);
         console.log('The following student:', msg);
     } catch (err) {
-        console.log(`${err}.`, 'Please send him away.');
+        console.error(`${err}.`, 'Please send him away.');
     }
 }
     
